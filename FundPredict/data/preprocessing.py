@@ -38,17 +38,3 @@ class DataPreprocessor:
 
         return df
 
-    @staticmethod
-    def save_data(df, output_path):
-        """
-        Saves the cleaned dataset to a file.
-
-        Args:
-            df (pd.DataFrame): The cleaned dataset.
-            output_path (str): File path to save the dataset.
-        """
-        try:
-            df.to_csv(output_path, index=False)
-            print(f"Dataset saved to {output_path}")
-        except Exception as e:
-            raise Exception(f"Error saving dataset: {e}")
