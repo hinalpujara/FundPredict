@@ -11,7 +11,7 @@ Follow these steps to set up and run the **FundPredict** project on your local m
 - Python 3.8 or higher
 - Git
 
-### Installation
+### Installation and Running
 
 1. **Clone the repository**:
    ```bash

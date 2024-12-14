@@ -91,15 +91,29 @@ def main():
         st.write("Please select a country to see region recommendations.")
 
     # Funding Trends and Insights
-    st.header(f"Funding Trends and Insights of {selected_country}")
-    if selected_country:
-        # Filter data for the selected country
-        country_city_funding = df[df['country_code'] == selected_country].groupby('city')['funding_total_usd'].sum()
+    st.header(f"Funding Trends and Insights for {selected_city}")
+    if selected_city:
+        # Filter data for the selected city
+        city_company_funding = df[df['city'] == selected_city][['name', 'funding_total_usd']]
 
-        if not country_city_funding.empty:
-            st.bar_chart(country_city_funding.sort_values(ascending=False), use_container_width=True)
+        if not city_company_funding.empty:
+            # Sort companies by funding amount in descending order
+            city_company_funding = city_company_funding.sort_values(by='funding_total_usd', ascending=False).head(10)
+            
+            # Horizontal bar chart using matplotlib
+            import matplotlib.pyplot as plt
+
+            fig, ax = plt.subplots()
+            ax.barh(city_company_funding['name'], city_company_funding['funding_total_usd'], color='skyblue')
+            ax.set_xlabel("Funding Total (USD)")
+            ax.set_ylabel("Company Name")
+            ax.set_title(f"Top 10 Companies by Funding in {selected_city}")
+            ax.invert_yaxis()  # To display the highest-funded company at the top
+
+            st.pyplot(fig)
         else:
-            st.warning(f"No funding data available for cities in {selected_country}.")
+            st.warning(f"No funding data available for companies in {selected_city}.")
+
 
 
 if __name__ == "__main__":
